@@ -2,7 +2,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import os
 import shutil
-import time
+from datetime import datetime as dt
 
 
 class ReqHandler(SimpleHTTPRequestHandler):
@@ -11,7 +11,7 @@ class ReqHandler(SimpleHTTPRequestHandler):
         src = os.path.join(self.directory, self.path[1:])
         dest = os.path.join(
             backupsdir,
-            os.path.splitext(os.path.basename(self.path))[0] + "-" + str(time.time()) + ".html")
+            os.path.splitext(os.path.basename(self.path))[0] + "-" + dt.now().strftime("%Y%m%d-%H%M") + ".html")
         if not os.path.exists(backupsdir):
             os.mkdir(backupsdir)
         shutil.copyfile(src, dest)
